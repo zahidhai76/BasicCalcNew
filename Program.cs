@@ -30,34 +30,33 @@ namespace CalcsNew
                             Console.WriteLine("Enter a shape out of the following: Rectangle, Triangle or Circle");
                             shapeChoice = Console.ReadLine().ToLower();
                         } while (!Valid.ValidShape(shapeChoice));
-                        if (shapeChoice == "triangle")
+                        IShape newObj;
+                        if (shapeChoice == "triangle" || shapeChoice == "rectangle")
                         {
-                            Triangle newObj = new Triangle();
-                            Console.WriteLine("Enter the length of your triangle: ");
+                            switch (shapeChoice)
+                            {
+                                case "triangle":
+                                    newObj = new Triangle();
+                                    break;
+                                default:
+                                    newObj = new BaseShape();
+                                    break;
+                            }
+                            newObj.Name = shapeChoice;
+                            Console.WriteLine("Enter the length of your {0}: ", newObj.Name);
                             newObj.Length = Convert.ToDouble(Console.ReadLine());
-                            Console.WriteLine("Enter the width of your triangle: ");
+                            Console.WriteLine("Enter the width of your {0}: ", newObj.Name);
                             newObj.Width = Convert.ToDouble(Console.ReadLine());
-                            newObj.Area();
-                            newObj.Perimeter();
-                        }
-                        else if (shapeChoice == "circle")
-                        {
-                            Circle newObj = new Circle();
-                            Console.WriteLine("Enter the radius of your circle: ");
-                            newObj.Length = Convert.ToDouble(Console.ReadLine());
-                            newObj.Area();
-                            newObj.Perimeter();
                         }
                         else
                         {
-                            BaseShape newObj = new BaseShape();
-                            Console.WriteLine("Enter the length of your rectangle: ");
+                            newObj = new Circle();
+                            newObj.Name = "circle";
+                            Console.WriteLine("Enter the radius of your circle: ");
                             newObj.Length = Convert.ToDouble(Console.ReadLine());
-                            Console.WriteLine("Enter the width of your rectagnle: ");
-                            newObj.Width = Convert.ToDouble(Console.ReadLine());
-                            newObj.Area();
-                            newObj.Perimeter();
                         }
+                        newObj.Area();
+                        newObj.Perimeter();
                     }
                     else if (choice == "calculator" || choice == "c")
                     {
@@ -168,7 +167,7 @@ namespace CalcsNew
         s = 3
     }
 
-    interface IShapeArea
+    interface IShape
     {
         double Length { get; set; }
         double Width { get; set; }
@@ -177,7 +176,7 @@ namespace CalcsNew
         void Perimeter();
     }
 
-    class BaseShape : IShapeArea
+    class BaseShape : IShape
     {
         public double Length { get; set; }
         public double Width { get; set; }
