@@ -148,6 +148,7 @@ namespace CalcsNew
         speed = 2,
         c = 3,
         a = 4,
+        s = 5,
         prime = 7,
         p = 8
     }
@@ -166,7 +167,17 @@ namespace CalcsNew
         c = 2,
         s = 3
     }
-    class BaseShape
+
+    interface IShapeArea
+    {
+        double Length { get; set; }
+        double Width { get; set; }
+        string Name { get; set; }
+        void Area();
+        void Perimeter();
+    }
+
+    class BaseShape : IShapeArea
     {
         public double Length { get; set; }
         public double Width { get; set; }
@@ -206,7 +217,7 @@ namespace CalcsNew
     {
         public override void Area()
         {
-            double area = 0.5 * Length * Length;
+            double area = 0.5 * Length * Width;
             Console.WriteLine("The area of your {0} is {1}", Name, area);
         }
         public override void Perimeter()
